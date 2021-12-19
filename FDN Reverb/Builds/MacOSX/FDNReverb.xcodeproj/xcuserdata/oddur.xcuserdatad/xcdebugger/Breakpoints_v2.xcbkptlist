@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "A8948BB7-CA64-463D-A0CA-4CF4BF720F46"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C72A551-7FBE-4855-BE1F-ABBDFB88AF32"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../Source/PluginProcessor.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "361"
+            endingLineNumber = "361"
+            landmarkName = "FDNReverbAudioProcessor::oscMessageReceived(message)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4C72A551-7FBE-4855-BE1F-ABBDFB88AF32 - 7e8235a9ca7a0bd8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FDNReverbAudioProcessor::oscMessageReceived(juce::OSCMessage const&amp;)"
+                  moduleName = "FDN Reverb"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oddur/Documents/GitHub/FDN_Thesis/FDN%20Reverb/Source/PluginProcessor.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "355"
+                  endingLineNumber = "355"
+                  offsetFromSymbolStart = "320">
+               </Location>
+               <Location
+                  uuid = "4C72A551-7FBE-4855-BE1F-ABBDFB88AF32 - 7e8235a9ca7a098b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FDNReverbAudioProcessor::oscMessageReceived(juce::OSCMessage const&amp;)"
+                  moduleName = "FDN Reverb"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oddur/Documents/GitHub/FDN_Thesis/FDN%20Reverb/Source/PluginProcessor.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "342"
+                  endingLineNumber = "342"
+                  offsetFromSymbolStart = "320">
+               </Location>
+               <Location
+                  uuid = "4C72A551-7FBE-4855-BE1F-ABBDFB88AF32 - 7e8235a9ca7a0bb9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FDNReverbAudioProcessor::oscMessageReceived(juce::OSCMessage const&amp;)"
+                  moduleName = "FDN Reverb"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oddur/Documents/GitHub/FDN_Thesis/FDN%20Reverb/Source/PluginProcessor.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "356"
+                  endingLineNumber = "356"
+                  offsetFromSymbolStart = "320">
+               </Location>
+               <Location
+                  uuid = "4C72A551-7FBE-4855-BE1F-ABBDFB88AF32 - 7e8235a9ca7a1406"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FDNReverbAudioProcessor::oscMessageReceived(juce::OSCMessage const&amp;)"
+                  moduleName = "FDN Reverb"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oddur/Documents/GitHub/FDN_Thesis/FDN%20Reverb/Source/PluginProcessor.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "361"
+                  endingLineNumber = "361"
+                  offsetFromSymbolStart = "320">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E994B980-50A1-42A6-BEE8-19D449C23C61"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../../Source/PluginProcessor.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
+            landmarkName = "FDNReverbAudioProcessor::oscMessageReceived(message)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

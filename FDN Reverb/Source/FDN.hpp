@@ -69,6 +69,12 @@ public:
     
     void updateModulation(float newDepth, float newRate);
     
+    void updateModDepthOSCSingle(int index, float newDepth);
+
+    void updateModRateOSCSingle(int index, float newRate);
+    void setModDepth(float newDepth);
+    void setModRate(float newRate);
+    
     String getMatrixValues();
 
     float randomFloat(float min, float max);
@@ -121,5 +127,5 @@ private:
     float PI = MathConstants<double>::pi;
     bool updatingFDNOrder = false;
     int delayUpdate = 0;
-    float modDepth = 6.f;
+    std::vector<float> modDepth;
 };

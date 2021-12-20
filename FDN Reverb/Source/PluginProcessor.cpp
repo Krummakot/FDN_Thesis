@@ -229,7 +229,10 @@ void FDNReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, ju
         updateParameters();
     }
     
-    fdn.updateModulation(modDepth->load(), modRate->load());
+    if(modulateFDNBool) {
+        fdn.updateModulation(modDepth->load(), modRate->load());
+    }
+    
 
         auto* left = buffer.getWritePointer(0);
         auto* right = buffer.getWritePointer(1);
@@ -319,7 +322,7 @@ void FDNReverbAudioProcessor::updateParameters() {
             updateMatrixBool = false;
         }
     
-    fdn.updateModulation(m_Depth, m_Rate);
+//    fdn.updateModulation(m_Depth, m_Rate);
     }
 
 //==============================================================================
@@ -337,6 +340,10 @@ void FDNReverbAudioProcessor::valueTreePropertyChanged(ValueTree &treeWhosePrope
 
 int FDNReverbAudioProcessor::getNrDelayLines() {
     return nrDelayLines;
+}
+
+void FDNReverbAudioProcessor::modulateFDN(bool modulate) {
+    modulateFDNBool = modulate;
 }
 
 void FDNReverbAudioProcessor::oscMessageReceived(const OSCMessage &message) {
@@ -486,8 +493,8 @@ void FDNReverbAudioProcessor::oscMessageReceived(const OSCMessage &message) {
             }
         }
         
-        if(messageString.compare("transFreq") == 0) {
-            oscMessageStatus = "Updating Transitional Frequency...";
+        if(messageString.compare("lowTransFreq") == 0) {
+            oscMessageStatus = "Updating Low Transitional Frequency...";
             
             if (message[1].isFloat32()) {
                 transFREQLow->operator=(message[1].getFloat32());
@@ -495,6 +502,61 @@ void FDNReverbAudioProcessor::oscMessageReceived(const OSCMessage &message) {
                 oscMessageStatus = "Transitional Frequency Updated";
             }
         }
+        
+        if (messageString.compare("highTransFreq") == 0) {
+            oscMessageStatus = "Updating High Transitional Frequency...";
+            
+            if (message[1].isFloat32()) {
+                transFREQHigh->operator=(message[1].getFloat32());
+                fdn.updateFilter(t60LOW->load(), t60HIGH->load(), transFREQLow->load(), transFREQHigh->load());
+                oscMessageStatus = "Transitional Frequency Updated";
+            }
+
+        }
+        
+        // ==== MODULATION ====
+        if (messageString.compare("modulation") == 0) {
+            if(message[1].isString()) {
+                String modString = message[1].getString();
+                if (modString.compare("on") == 0) {
+                    modulateFDNBool = true;
+                    oscMessageStatus = "Modulation is on";
+                } else if (modString.compare("off") == 0) {
+                    modulateFDNBool = false;
+                    oscMessageStatus = "Modulation is off";
+                }
+            }
+        }
+        if (messageString.compare("modDepthSingle") == 0) {
+            if (message[1].isInt32() && message[2].isFloat32()) {
+                fdn.updateModDepthOSCSingle(message[1].getInt32(), message[2].getFloat32());
+                oscMessageStatus = "LFO Index [" + std::to_string(message[1].getInt32()) + "] Updated. New Depth = " + std::to_string(message[2].getFloat32());
+            }
+        }
+        
+        if (messageString.compare("modDepthWhole") == 0) {
+            if (message[1].isFloat32()) {
+                fdn.setModDepth(message[1].getFloat32());
+                modDepth->operator=(message[1].getFloat32());
+                oscMessageStatus = "LFO modulation depth updated";
+            }
+        }
+        
+        if (messageString.compare("modRateSingle") == 0) {
+            if (message[1].isInt32() && message[2].isFloat32()) {
+                fdn.updateModRateOSCSingle(message[1].getInt32(), message[2].getFloat32());
+                oscMessageStatus = "LFO Index [" + std::to_string(message[1].getInt32()) + "] Updated. New Rate = " + std::to_string(message[2].getFloat32());
+            }
+        }
+        
+        if (messageString.compare("modRateWhole") == 0) {
+            if (message[1].isFloat32()) {
+                fdn.setModRate(message[1].getFloat32());
+                modRate->operator=(message[1].getFloat32());
+                oscMessageStatus = "LFO modulation rate updated";
+            }
+        }
+        
     }
 
 }

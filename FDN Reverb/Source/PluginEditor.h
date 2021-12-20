@@ -38,6 +38,7 @@ public:
     void matrixWindowButtonClicked();
     void showInfoButtonClicked();
     void connectUDP();
+    void changeModulationState();
     
     void matrixBoxChanged();
     void updatePortNumber();
@@ -53,7 +54,7 @@ private:
     AudioProcessorValueTreeState& valueTreeState;
     
     
-    Label lowT60Label, highT60Label, lowCutoffabel, highCutoffLabel, dryWetLabel, delayLengthLabel, modDepthLabel, modRateLabel, matrixLabel, fdnOrderLabel, matrixValueLabel, infoLabel, delayButtonLabel, matrixWindowLabel, showInfoLabel, acceptUDPConnectionLabel;
+    Label lowT60Label, highT60Label, lowCutoffabel, highCutoffLabel, dryWetLabel, delayLengthLabel, modDepthLabel, modRateLabel, matrixLabel, fdnOrderLabel, matrixValueLabel, infoLabel, delayButtonLabel, matrixWindowLabel, showInfoLabel, acceptUDPConnectionLabel, modulationButtonLabel;
     
     Slider lowT60Slider, highT60Slider, lowCutoffSlider, highCutoffSlider, dryWetSlider, delayLengthSlider, modDepthSlider, modRateSlider;
 
@@ -63,7 +64,7 @@ private:
     
     std::unique_ptr<ComboBoxAttachment> nrOfRoomsAttach, matrixAttach;
     
-    ToggleButton delayButton, matrixWindowButton, showInfoButton, acceptUDPConnectionButton;
+    ToggleButton delayButton, matrixWindowButton, showInfoButton, acceptUDPConnectionButton, modulationButton;
     
     // === Layout Labels === //
     Label titleLabel, nrDelayLinesLabel, oscStatusLabel, portNumberLabel, portEditorLabel, bGainsTitle, bGainsValues, cGainsTitle, cGainsValues, delaysTitle, delaysValues;

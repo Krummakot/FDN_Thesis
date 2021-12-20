@@ -48,6 +48,12 @@ FDNReverbAudioProcessorEditor::FDNReverbAudioProcessorEditor (FDNReverbAudioProc
     setLabel(modDepthLabel, "Mod. Depth", smallFont, leftJust);
     modDepthLabel.attachToComponent(&modDepthSlider, true);
     
+    addAndMakeVisible(modulationButton);
+    modulationButton.onClick = [this] {changeModulationState();};
+    
+    setLabel(modulationButtonLabel, "Modulate", smallFont, leftJust);
+    modulationButtonLabel.attachToComponent(&modulationButton, true);
+    
     // ==== DRY/WET ====
     setSlider(dryWetSlider, linHor, 0.f, 100.f, 50.f, "%");
     dryWetSliderAttach.reset(new SliderAttachment (valueTreeState, "DRYWET", dryWetSlider));
@@ -236,11 +242,13 @@ void FDNReverbAudioProcessorEditor::resized()
     modRateSlider.setBounds(sliderLeft, delayLengthSlider.getY() + sliderHeight, getWidth()/2 - sliderLeft, sliderHeight);
     
     modDepthSlider.setBounds(getWidth()/2 + sliderLeft, delayLengthSlider.getY() + sliderHeight, getWidth()/2 - sliderLeft, sliderHeight);
+    
+    modulationButton.setBounds(sliderLeft, modRateSlider.getY() + sliderHeight, buttonSize, buttonSize);
 
-    dryWetSlider.setBounds(sliderLeft, modRateSlider.getY() + sliderHeight, getWidth() - sliderLeft, sliderHeight);
+    dryWetSlider.setBounds(sliderLeft, modulationButton.getY() + sliderHeight, getWidth() - sliderLeft, sliderHeight);
     // === ComboBox BBunds ===
-    fdnOrderComboBox.setBounds(getWidth()/2, dryWetSlider.getY() + 20, 70, 20);
-    matrixComboBox.setBounds(sliderRight - 50, dryWetSlider.getY() + 20, 80, 20);
+    fdnOrderComboBox.setBounds(getWidth()/2, dryWetSlider.getY() + sliderHeight, 70, 20);
+    matrixComboBox.setBounds(sliderRight - 50, dryWetSlider.getY() + sliderHeight, 80, 20);
     
     // === Button Bounds ===
     delayButton.setBounds(sliderRight, delayLengthSlider.getY(), buttonSize, buttonSize);
@@ -282,6 +290,12 @@ void FDNReverbAudioProcessorEditor::timerCallback() {
     modDepthSlider.setValue(*valueTreeState.getRawParameterValue("MODDEPTH"));
     dryWetSlider.setValue(*valueTreeState.getRawParameterValue("DRYWET"));
     matrixComboBox.setSelectedId(*valueTreeState.getRawParameterValue("MATRIXSELECTION"));
+
+    if (audioProcessor.modulateFDNBool) {
+        modulationButton.setToggleState(true, false);
+    } else {
+        modulationButton.setToggleState(false, false);
+    }
     
     oscStatusLabel.setText("OSC Updates: " + audioProcessor.getOSCMessageStatus(), dontSendNotification);
     
@@ -406,6 +420,7 @@ void FDNReverbAudioProcessorEditor::matrixWindowButtonClicked() {
         delayLengthSlider.setVisible(false);
         modRateSlider.setVisible(false);
         modDepthSlider.setVisible(false);
+        modulationButton.setVisible(false);
         matrixComboBox.setVisible(false);
         delayButton.setVisible(false);
         fdnOrderComboBox.setVisible(false);
@@ -421,6 +436,7 @@ void FDNReverbAudioProcessorEditor::matrixWindowButtonClicked() {
         delayLengthSlider.setVisible(true);
         modRateSlider.setVisible(true);
         modDepthSlider.setVisible(true);
+        modulationButton.setVisible(true);
         matrixComboBox.setVisible(true);
         delayButton.setVisible(true);
         fdnOrderComboBox.setVisible(true);
@@ -458,6 +474,14 @@ void FDNReverbAudioProcessorEditor::connectUDP() {
         audioProcessor.connectUDP(true);
     } else {
         audioProcessor.connectUDP(false);
+    }
+}
+
+void FDNReverbAudioProcessorEditor::changeModulationState() {
+    if (modulationButton.getToggleState() == 1) {
+        audioProcessor.modulateFDN(true);
+    } else {
+        audioProcessor.modulateFDN(false);
     }
 }
 

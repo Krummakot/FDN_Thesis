@@ -46,6 +46,7 @@ void FDN::init(float sampleRate, int nrDel, float loDel, float highDel) {
     highShelf = new Filter[maxDelayLines];
     endHighShelf = new Filter[maxDelayLines];
 
+    modDepth.resize(maxDelayLines);
     lfos.resize(maxDelayLines);
     delayLineSmoother.resize(maxDelayLines);
 
@@ -58,6 +59,7 @@ void FDN::init(float sampleRate, int nrDel, float loDel, float highDel) {
         lfos[i] = dsp::Oscillator<float>{[](float x) {return std::sin(x);}};
         bGains[i] = randomFloat(-1.f, 1.f);
         cGains[i] = randomFloat(-1.f, 1.f);
+        modDepth[i] = 6.f;
         lfos[i].setFrequency(randomFloat(0.0f, 2.f));
         delayLineSmoother[i].reset(Fs, 0.05f);
         delayLineSmoother[i].setCurrentAndTargetValue(delayLength[i]);
@@ -168,11 +170,12 @@ void FDN::setDelayOSCSingle(int index, int newDelay) {
 }
 
 void FDN::updateModulation(float newDepth, float newRate) {
-    modDepth = newDepth;
+
     for(int i = 0; i < nrDelayLines; ++i) {
+        modDepth[i] = newDepth;
         lfos[i].setFrequency(newRate);
         float delay = delayLength[i];
-        float lfoOut = modDepth * lfos[i].processSample(0.0f);
+        float lfoOut = modDepth[i] * lfos[i].processSample(0.0f);
 
         float newDelay = delay + lfoOut;
         
@@ -268,6 +271,25 @@ void FDN::updateMatrixCoefficientsOSC(std::vector<float> newMatrixCoef, String s
     }
 }
 
+void FDN::setModRate(float newRate) {
+    for (int i = 0; i < nrDelayLines; ++i) {
+        lfos[i].setFrequency(newRate);
+    }
+}
+
+void FDN::setModDepth(float newDepth) {
+    for (int i = 0; i < nrDelayLines; ++i) {
+        modDepth[i] = newDepth;
+    }
+}
+
+void FDN::updateModRateOSCSingle(int index, float newRate) {
+    lfos[index].setFrequency(newRate);
+}
+
+void FDN::updateModDepthOSCSingle(int index, float newDepth) {
+    modDepth[index] = newDepth;
+}
 
 String FDN::getMatrixValues() {
     return mixingMatrix->toString();

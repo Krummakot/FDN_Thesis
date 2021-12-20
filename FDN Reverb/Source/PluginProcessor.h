@@ -82,6 +82,8 @@ public:
     int getPortNumber();
     void connectUDP(bool connected);
     
+    void modulateFDN(bool modulate);
+    
     String getOSCConnectionStatus();
     String getOSCMessageStatus();
     String getMatrixValues();
@@ -124,6 +126,7 @@ public:
     bool updateMatrixBool = true;
     bool updateMatrixOSCBool = false;
     bool updateDelayOSCBool = false;
+    bool modulateFDNBool = false;
     
 
 private:
